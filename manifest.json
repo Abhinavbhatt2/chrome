@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Load More",
+  "version": "1.0",
+  "description": "Automatically clicks the 'Load More' button until all records are loaded.",
+  "permissions": ["scripting", "activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
