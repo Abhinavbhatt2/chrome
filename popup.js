@@ -13,7 +13,7 @@ function autoLoadMore() {
     if (btn && btn.style.display !== 'none') {
       console.log('Clicking Load More...');
       btn.click();
-      setTimeout(clickButton, 2000); // wait 2s then click again
+      setTimeout(clickButton, 30000); // wait 30 seconds before clicking again
     } else {
       console.log('No more button or finished loading.');
       alert('✅ All records loaded!');
