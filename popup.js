@@ -3,25 +3,27 @@ document.getElementById('start').addEventListener('click', async () => {
 
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    function: autoLoadMore
+    function: injectScript
   });
 });
 
-function autoLoadMore() {
-  function clickButton() {
-    const btn = document.querySelector('#ContentPlaceHolder1_LnkShowNext100');
-    if (btn && btn.offsetParent !== null) { // check if visible
-      console.log('Clicking Load More in page context...');
-      // Create real DOM click event
-      const event = document.createEvent('MouseEvents');
-      event.initMouseEvent('click', true, true, window);
-      btn.dispatchEvent(event);
-
-      setTimeout(clickButton, 300000); // wait 30 sec then check again
-    } else {
-      console.log('No more Load More button or finished loading.');
-      alert('✅ All records loaded!');
-    }
-  }
-  clickButton();
+function injectScript() {
+  const script = document.createElement('script');
+  script.textContent = `
+    (function autoClickLoadMore() {
+      function clickButton() {
+        var btn = document.querySelector('#ContentPlaceHolder1_LnkShowNext100');
+        if (btn && btn.offsetParent !== null) {
+          console.log('Clicking Load More...');
+          btn.click();
+          setTimeout(clickButton, 50000); // wait 50 seconds
+        } else {
+          console.log('No more Load More button.');
+          alert('✅ All records loaded!');
+        }
+      }
+      clickButton();
+    })();
+  `;
+  document.documentElement.appendChild(script);
 }
